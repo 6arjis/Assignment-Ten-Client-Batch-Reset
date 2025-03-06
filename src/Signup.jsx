@@ -2,17 +2,32 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 
 const Signup = () => {
+  const handleSignUp = (e) => {
+    e.preventDefault();
+    const formElement = e.target;
+    const form = new FormData(e.target);
+    const name = form.get("name");
+    const email = form.get("email");
+    const photoURL = form.get("photoURL");
+    const password = form.get("password");
+    console.log(name, email, photoURL, password);
+    formElement.reset();
+  };
   return (
     <>
       <h1 className="text-center md:text-3xl text-xl my-5">
         Create An Account To Explore More
       </h1>
-      <fieldset className="fieldset mx-auto md:w-lg w-s bg-base-200 border border-base-300 p-4 rounded-box my-5">
+      <form
+        onSubmit={handleSignUp}
+        className="fieldset mx-auto md:w-lg w-s bg-base-200 border border-base-300 p-4 rounded-box my-5"
+      >
         <label className="fieldset-label">Name</label>
         <input
           type="text"
           className="input w-full"
           placeholder="Enter Username"
+          name="name"
         />
 
         <label className="fieldset-label">Email</label>
@@ -20,6 +35,7 @@ const Signup = () => {
           type="email"
           className="input  w-full"
           placeholder="Enter Email"
+          name="email"
         />
 
         <label className="fieldset-label">PhotoURL</label>
@@ -27,6 +43,7 @@ const Signup = () => {
           type="text"
           className="input  w-full"
           placeholder="Enter PhotoURL"
+          name="photoURL"
         />
 
         <label className="fieldset-label">Password</label>
@@ -34,9 +51,10 @@ const Signup = () => {
           type="password"
           className="input w-full"
           placeholder="Enter Password"
+          name="password"
         />
 
-        <button className="btn btn-neutral mt-4">Login</button>
+        <button className="btn btn-neutral mt-4">Signup</button>
         <button className="btn bg-white text-black border-[#e5e5e5]">
           <svg
             aria-label="Google logo"
@@ -65,7 +83,7 @@ const Signup = () => {
               ></path>
             </g>
           </svg>
-          Login with Google
+          Signup with Google
         </button>
         <p className="md:text-lg text-sm">
           Already have an account?{" "}
@@ -74,7 +92,7 @@ const Signup = () => {
           </span>
           here{" "}
         </p>
-      </fieldset>
+      </form>
     </>
   );
 };

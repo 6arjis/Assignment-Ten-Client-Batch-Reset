@@ -2,20 +2,38 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 
 const Signin = () => {
+  const handleSignIn = (e) => {
+    e.preventDefault();
+    const formElement = e.target;
+    const form = new FormData(e.target);
+    const email = form.get("email");
+    const password = form.get("password");
+    console.log(email, password);
+    formElement.reset();
+  };
   return (
     <>
       <h1 className="text-center md:text-3xl text-xl my-5">
         Login To Explore More
       </h1>
-      <fieldset className="fieldset mx-auto md:w-lg w-s bg-base-200 border border-base-300 p-4 rounded-box my-5">
+      <form
+        onSubmit={handleSignIn}
+        className="fieldset mx-auto md:w-lg w-s bg-base-200 border border-base-300 p-4 rounded-box my-5"
+      >
         <label className="fieldset-label">Email</label>
-        <input type="email" className="input  w-full" placeholder="Email" />
+        <input
+          type="email"
+          className="input  w-full"
+          placeholder="Email"
+          name="email"
+        />
 
         <label className="fieldset-label">Password</label>
         <input
           type="password"
           className="input w-full"
           placeholder="Password"
+          name="password"
         />
 
         <button className="btn btn-neutral mt-4">Login</button>
@@ -56,7 +74,7 @@ const Signin = () => {
           </span>
           here{" "}
         </p>
-      </fieldset>
+      </form>
     </>
   );
 };

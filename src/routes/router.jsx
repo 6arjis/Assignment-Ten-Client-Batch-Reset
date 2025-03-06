@@ -5,12 +5,17 @@ import AddEquipment from "../Components/AddEquipment";
 import MyEquipmentList from "../Components/MyEquipmentList";
 import Signin from "../Signin";
 import Signup from "../Signup";
+import Home from "../Components/Home";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <HomeLayout></HomeLayout>,
     children: [
+      {
+        path: "/",
+        element: <Home></Home>,
+      },
       {
         path: "/allSportsEquipment",
         element: <AllSportsEquipment></AllSportsEquipment>,

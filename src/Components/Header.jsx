@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-
+import "./Header.css";
 const Header = () => {
   const user = true;
   return (
@@ -47,16 +47,16 @@ const Header = () => {
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
           <li>
-            <NavLink to="">Home</NavLink>
+            <NavLink to="/">Home</NavLink>
           </li>
           <li>
-            <NavLink to="">All Sports Equipments</NavLink>
+            <NavLink to="/allSportsEquipment">All Sports Equipments</NavLink>
           </li>
           <li>
-            <NavLink to="">Add Equipment</NavLink>
+            <NavLink to="/addEquipment">Add Equipment</NavLink>
           </li>
           <li>
-            <NavLink to="">My Equipment List</NavLink>
+            <NavLink to="/myEquipmentList">My Equipment List</NavLink>
           </li>
         </ul>
       </div>
