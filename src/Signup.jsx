@@ -1,10 +1,12 @@
 import React, { useContext } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "./Provider/AuthProvider";
 import { toast } from "react-toastify";
 
 const Signup = () => {
-  const { createNewUser, setUser } = useContext(AuthContext);
+  const { createNewUser, setUser, signInWithGoogle, updateUserProfile } =
+    useContext(AuthContext);
+  const navigate = useNavigate();
   const handleSignUp = (e) => {
     e.preventDefault();
     const formElement = e.target;
@@ -13,6 +15,27 @@ const Signup = () => {
     const email = form.get("email");
     const photoURL = form.get("photoURL");
     const password = form.get("password");
+
+    const pattern = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
+    if (pattern.test(password)) {
+      console.log("Password is valid");
+    } else {
+      toast.error(
+        `Password Must Contain At least 6 Character, A Uppercase And A Lowercase alphabet  To Create An Account!`,
+        {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        }
+      );
+      return;
+    }
+
     console.log(name, email, photoURL, password);
     formElement.reset();
 
@@ -20,6 +43,16 @@ const Signup = () => {
       .then((res) => {
         const user = res.user;
         setUser(user);
+        updateUserProfile({ displayName: name, photoURL: photoURL })
+          .then(() => {
+            navigate("/");
+          })
+          .catch((err) => {
+            const errorCode = err.code;
+            const errorMessage = err.message;
+            console.log(errorCode, errorMessage);
+          });
+
         toast.success("User Successfully Signed Up and Logged in", {
           position: "top-center",
           autoClose: 5000,
@@ -48,53 +81,63 @@ const Signup = () => {
         console.log(errorCode, errorMessage);
       });
   };
+  const handleSignInWithGoogleBtn = () => {
+    signInWithGoogle().then((res) => {
+      const user = res.user;
+      setUser(user);
+      navigate("/");
+      toast.success("Successfully Signed Up With Google");
+    });
+  };
   return (
     <>
-      <h1 className="text-center md:text-3xl text-xl my-5">
-        Create An Account To Explore More
-      </h1>
-      <form
-        onSubmit={handleSignUp}
-        className="fieldset mx-auto md:w-lg w-s bg-base-200 border border-base-300 p-4 rounded-box my-5"
-      >
-        <label className="fieldset-label">Name</label>
-        <input
-          type="text"
-          className="input w-full"
-          placeholder="Enter Username"
-          name="name"
-          required
-        />
+      <div className="fieldset mx-auto md:w-lg w-s bg-base-200 border border-base-300 p-4 rounded-box my-5">
+        <h1 className="text-center md:text-3xl text-xl my-5">
+          Create An Account To Explore More
+        </h1>
+        <form onSubmit={handleSignUp}>
+          <label className="fieldset-label">Name</label>
+          <input
+            type="text"
+            className="input w-full"
+            placeholder="Enter Username"
+            name="name"
+            required
+          />
 
-        <label className="fieldset-label">Email</label>
-        <input
-          type="email"
-          className="input  w-full"
-          placeholder="Enter Email"
-          name="email"
-          required
-        />
+          <label className="fieldset-label">Email</label>
+          <input
+            type="email"
+            className="input  w-full"
+            placeholder="Enter Email"
+            name="email"
+            required
+          />
 
-        <label className="fieldset-label">PhotoURL</label>
-        <input
-          type="text"
-          className="input  w-full"
-          placeholder="Enter PhotoURL"
-          name="photoURL"
-          required
-        />
+          <label className="fieldset-label">PhotoURL</label>
+          <input
+            type="text"
+            className="input  w-full"
+            placeholder="Enter PhotoURL"
+            name="photoURL"
+            required
+          />
 
-        <label className="fieldset-label">Password</label>
-        <input
-          type="password"
-          className="input w-full"
-          placeholder="Enter Password"
-          name="password"
-          required
-        />
+          <label className="fieldset-label">Password</label>
+          <input
+            type="password"
+            className="input w-full"
+            placeholder="Enter Password"
+            name="password"
+            required
+          />
 
-        <button className="btn btn-neutral mt-4">Signup</button>
-        <button className="btn bg-white text-black border-[#e5e5e5]">
+          <button className="btn btn-neutral w-full mt-4">Signup</button>
+        </form>
+        <button
+          onClick={handleSignInWithGoogleBtn}
+          className="btn bg-white text-black border-[#e5e5e5]"
+        >
           <svg
             aria-label="Google logo"
             width="16"
@@ -131,7 +174,7 @@ const Signup = () => {
           </span>
           here{" "}
         </p>
-      </form>
+      </div>
     </>
   );
 };

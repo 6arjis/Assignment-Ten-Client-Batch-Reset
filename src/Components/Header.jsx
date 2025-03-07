@@ -86,19 +86,21 @@ const Header = () => {
         {user ? (
           <div className="avatar flex gap-2">
             <div className="w-8 rounded-full">
-              <img
-                title={user.email}
-                src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-              />
+              <img title={user.displayName} src={user.photoURL} />
             </div>
             <button onClick={handleLogOutBtn} className="btn btn-sm">
               Logout
             </button>
           </div>
         ) : (
-          <NavLink to="/auth/signin" className="btn">
-            Login
-          </NavLink>
+          <div className="join join-vertical lg:join-horizontal">
+            <NavLink to="/auth/signin" className="btn btn-sm join-item">
+              Login
+            </NavLink>
+            <NavLink to="/auth/signup" className="btn btn-sm join-item">
+              Sign Up
+            </NavLink>
+          </div>
         )}
       </div>
     </div>

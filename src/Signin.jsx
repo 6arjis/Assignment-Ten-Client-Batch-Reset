@@ -1,10 +1,13 @@
 import React, { useContext } from "react";
-import { NavLink } from "react-router-dom";
+import { Navigate, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "./Provider/AuthProvider";
 import { toast } from "react-toastify";
 
 const Signin = () => {
-  const { logInUser, setUser } = useContext(AuthContext);
+  const { logInUser, setUser, signInWithGoogle } = useContext(AuthContext);
+  const location = useLocation();
+  const navigate = useNavigate();
+  console.log(location);
   const handleSignIn = (e) => {
     e.preventDefault();
     const formElement = e.target;
@@ -18,6 +21,7 @@ const Signin = () => {
       .then((res) => {
         const user = res.user;
         setUser(user);
+        navigate(location?.state ? location.state : "/");
         toast.success("User Successfully logged in", {
           position: "top-center",
           autoClose: 5000,
@@ -46,33 +50,43 @@ const Signin = () => {
         console.log(errorCode, errorMessage);
       });
   };
+  const handleSignInWithGoogleBtn = () => {
+    signInWithGoogle().then((res) => {
+      const user = res.user;
+      setUser(user);
+      navigate(location.state);
+      toast.success("Successfully Signed In With Google");
+    });
+  };
   return (
     <>
       <h1 className="text-center md:text-3xl text-xl my-5">
         Login To Explore More
       </h1>
-      <form
-        onSubmit={handleSignIn}
-        className="fieldset mx-auto md:w-lg w-s bg-base-200 border border-base-300 p-4 rounded-box my-5"
-      >
-        <label className="fieldset-label">Email</label>
-        <input
-          type="email"
-          className="input  w-full"
-          placeholder="Email"
-          name="email"
-        />
+      <div className="fieldset mx-auto md:w-lg w-s bg-base-200 border border-base-300 p-4 rounded-box my-5">
+        <form onSubmit={handleSignIn}>
+          <label className="fieldset-label">Email</label>
+          <input
+            type="email"
+            className="input  w-full"
+            placeholder="Email"
+            name="email"
+          />
 
-        <label className="fieldset-label">Password</label>
-        <input
-          type="password"
-          className="input w-full"
-          placeholder="Password"
-          name="password"
-        />
+          <label className="fieldset-label">Password</label>
+          <input
+            type="password"
+            className="input w-full"
+            placeholder="Password"
+            name="password"
+          />
 
-        <button className="btn btn-neutral mt-4">Login</button>
-        <button className="btn bg-white text-black border-[#e5e5e5]">
+          <button className="btn btn-neutral w-full mt-4">Login</button>
+        </form>
+        <button
+          onClick={handleSignInWithGoogleBtn}
+          className="btn bg-white   text-black border-[#e5e5e5]"
+        >
           <svg
             aria-label="Google logo"
             width="16"
@@ -109,7 +123,7 @@ const Signin = () => {
           </span>
           here{" "}
         </p>
-      </form>
+      </div>
     </>
   );
 };

@@ -5,12 +5,12 @@ import { initializeApp } from "firebase/app";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyDYoiLePfAChotLvXb_VzAdjXCAVnGC5ls",
-  authDomain: "fitgearhub-ph-a10.firebaseapp.com",
-  projectId: "fitgearhub-ph-a10",
-  storageBucket: "fitgearhub-ph-a10.firebasestorage.app",
-  messagingSenderId: "202791960345",
-  appId: "1:202791960345:web:f7da8dc17954379389cf88",
+  apiKey: import.meta.env.VITE_apiKey,
+  authDomain: import.meta.env.VITE_authDomain,
+  projectId: import.meta.env.VITE_projectId,
+  storageBucket: import.meta.env.VITE_storageBucket,
+  messagingSenderId: import.meta.env.VITE_messagingSenderId,
+  appId: import.meta.env.VITE_appId,
 };
 
 // Initialize Firebase

@@ -8,6 +8,7 @@ import Signup from "../Signup";
 import Home from "../Components/Home";
 import Details from "../Components/Details";
 import AuthLayout from "../Layouts/AuthLayout";
+import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -28,11 +29,19 @@ const router = createBrowserRouter([
       },
       {
         path: "/addEquipment",
-        element: <AddEquipment></AddEquipment>,
+        element: (
+          <PrivateRoute>
+            <AddEquipment></AddEquipment>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/myEquipmentList",
-        element: <MyEquipmentList></MyEquipmentList>,
+        element: (
+          <PrivateRoute>
+            <MyEquipmentList></MyEquipmentList>
+          </PrivateRoute>
+        ),
       },
       {
         path: "auth",

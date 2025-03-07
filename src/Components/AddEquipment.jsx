@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
+import { AuthContext } from "../Provider/AuthProvider";
 
 const AddEquipment = () => {
+  const { user } = useContext(AuthContext);
   const handleAddEquipment = (e) => {
     e.preventDefault();
     // const formElement = e.target();
@@ -134,18 +136,12 @@ const AddEquipment = () => {
             <input
               type="text"
               className="input w-full"
-              placeholder="Barjjis Hasan Chowdhury"
-              name="userName"
+              value={user.displayName}
             />
           </div>
           <div className="col-span-6">
             <label className="fieldset-label">Email</label>
-            <input
-              type="text"
-              className="input w-full"
-              placeholder="barjjishasanchowdhury96@gmail.com"
-              name="email"
-            />
+            <input type="text" className="input w-full" value={user.email} />
           </div>
         </div>
 
