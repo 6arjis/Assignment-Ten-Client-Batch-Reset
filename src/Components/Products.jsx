@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Products = () => {
   return (
@@ -55,7 +56,9 @@ const Products = () => {
               are title and actions parts
             </p>
             <div className="card-actions justify-end">
-              <button className="btn btn-primary">Buy Now</button>
+              <Link to={`/details/${2}`} className="btn btn-primary">
+                Buy Now
+              </Link>
             </div>
           </div>
         </div>

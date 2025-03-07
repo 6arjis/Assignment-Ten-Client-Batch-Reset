@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
+import { AuthContext } from "./Provider/AuthProvider";
+import { toast } from "react-toastify";
 
 const Signin = () => {
+  const { logInUser, setUser } = useContext(AuthContext);
   const handleSignIn = (e) => {
     e.preventDefault();
     const formElement = e.target;
@@ -10,6 +13,38 @@ const Signin = () => {
     const password = form.get("password");
     console.log(email, password);
     formElement.reset();
+
+    logInUser(email, password)
+      .then((res) => {
+        const user = res.user;
+        setUser(user);
+        toast.success("User Successfully logged in", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+        console.log(user);
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        toast.error(`Wrong Email or Password`, {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+        console.log(errorCode, errorMessage);
+      });
   };
   return (
     <>
@@ -70,7 +105,7 @@ const Signin = () => {
         <p className="md:text-lg text-sm">
           Don't have an account?{" "}
           <span className="text-orange-700">
-            <NavLink to="/signup">Register </NavLink>
+            <NavLink to="/auth/signup">Register </NavLink>
           </span>
           here{" "}
         </p>

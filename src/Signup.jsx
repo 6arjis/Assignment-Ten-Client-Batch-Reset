@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
+import { AuthContext } from "./Provider/AuthProvider";
+import { toast } from "react-toastify";
 
 const Signup = () => {
+  const { createNewUser, setUser } = useContext(AuthContext);
   const handleSignUp = (e) => {
     e.preventDefault();
     const formElement = e.target;
@@ -12,6 +15,38 @@ const Signup = () => {
     const password = form.get("password");
     console.log(name, email, photoURL, password);
     formElement.reset();
+
+    createNewUser(email, password)
+      .then((res) => {
+        const user = res.user;
+        setUser(user);
+        toast.success("User Successfully Signed Up and Logged in", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+        console.log(user);
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        toast.error(`Please Use Valid Credentials To Create An Account!`, {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+        console.log(errorCode, errorMessage);
+      });
   };
   return (
     <>
@@ -28,6 +63,7 @@ const Signup = () => {
           className="input w-full"
           placeholder="Enter Username"
           name="name"
+          required
         />
 
         <label className="fieldset-label">Email</label>
@@ -36,6 +72,7 @@ const Signup = () => {
           className="input  w-full"
           placeholder="Enter Email"
           name="email"
+          required
         />
 
         <label className="fieldset-label">PhotoURL</label>
@@ -44,6 +81,7 @@ const Signup = () => {
           className="input  w-full"
           placeholder="Enter PhotoURL"
           name="photoURL"
+          required
         />
 
         <label className="fieldset-label">Password</label>
@@ -52,6 +90,7 @@ const Signup = () => {
           className="input w-full"
           placeholder="Enter Password"
           name="password"
+          required
         />
 
         <button className="btn btn-neutral mt-4">Signup</button>
@@ -88,7 +127,7 @@ const Signup = () => {
         <p className="md:text-lg text-sm">
           Already have an account?{" "}
           <span className="text-orange-700">
-            <NavLink to="/signin">Login </NavLink>
+            <NavLink to="/auth/signin">Login </NavLink>
           </span>
           here{" "}
         </p>
