@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../Provider/AuthProvider";
+import { toast } from "react-toastify";
 
 const AddEquipment = () => {
   const { user } = useContext(AuthContext);
@@ -13,9 +14,11 @@ const AddEquipment = () => {
     const description = form.get("description");
     const customDetails = form.get("customDetails");
     const price = form.get("price");
-    const rating = form.get("rating");
+    const rating = form.get("ratings");
     const deliveryTime = form.get("time");
     const availability = form.get("stock");
+    const sellerName = form.get("name");
+    const email = form.get("email");
     const newItem = {
       imageURL,
       productName,
@@ -26,8 +29,25 @@ const AddEquipment = () => {
       rating,
       deliveryTime,
       availability,
+      sellerName,
+      email,
     };
     console.log(newItem);
+    //Send Data To The Server
+    fetch("http://localhost:3000/equipment", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(newItem),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.insertedId) {
+          toast.success("Item has been added successfully");
+        }
+      });
   };
   return (
     <>
@@ -137,11 +157,17 @@ const AddEquipment = () => {
               type="text"
               className="input w-full"
               value={user.displayName}
+              name="name"
             />
           </div>
           <div className="col-span-6">
             <label className="fieldset-label">Email</label>
-            <input type="text" className="input w-full" value={user.email} />
+            <input
+              type="text"
+              className="input w-full"
+              value={user.email}
+              name="email"
+            />
           </div>
         </div>
 
