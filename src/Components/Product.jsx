@@ -25,7 +25,7 @@ const Product = ({ data }) => {
         <h2 className="card-title">{productName}</h2>
         <p>{description}</p>
         <div className="card-actions justify-end">
-          <Link to={`/details/${2}`} className="btn btn-primary">
+          <Link to={`/details/${_id}`} className="btn btn-primary">
             View Details
           </Link>
         </div>
