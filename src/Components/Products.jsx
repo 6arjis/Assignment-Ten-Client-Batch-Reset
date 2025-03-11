@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useLoaderData } from "react-router-dom";
 import Product from "./Product";
-
+import { Fade } from "react-awesome-reveal";
 const Products = () => {
   const equipments = useLoaderData();
   console.log(equipments);
@@ -12,7 +12,9 @@ const Products = () => {
       </h1>
       <div className="grid grid-cols-3 gap-3">
         {equipments.slice(0, 6).map((equipment) => (
-          <Product key={equipment._id} data={equipment}></Product>
+          <Fade cascade>
+            <Product key={equipment._id} data={equipment}></Product>
+          </Fade>
         ))}
       </div>
     </div>

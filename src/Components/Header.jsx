@@ -4,6 +4,7 @@ import "./Header.css";
 import { AuthContext } from "../Provider/AuthProvider";
 import { toast } from "react-toastify";
 import { useTheme } from "../ThemeContext";
+import { Tooltip } from "react-tooltip";
 
 const Header = () => {
   const { user, logOutUser } = useContext(AuthContext);
@@ -90,7 +91,12 @@ const Header = () => {
         {user ? (
           <div className="avatar flex gap-2">
             <div className="w-8 rounded-full">
-              <img title={user.displayName} src={user.photoURL} />
+              <img id="my-anchor-element" src={user.photoURL} />
+              <Tooltip
+                style={{ zIndex: 9999 }}
+                anchorSelect="#my-anchor-element"
+                content={user.displayName}
+              />
             </div>
             <button onClick={handleLogOutBtn} className="btn btn-sm">
               Logout

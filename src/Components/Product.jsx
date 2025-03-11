@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { Tooltip } from "react-tooltip";
 
 const Product = ({ data }) => {
   const {
@@ -25,9 +26,15 @@ const Product = ({ data }) => {
         <h2 className="card-title">{productName}</h2>
         <p>{description}</p>
         <div className="card-actions justify-end">
-          <Link to={`/details/${_id}`} className="btn btn-primary">
+          <Link
+            data-tooltip-id="my-tooltip"
+            data-tooltip-content="Click Here To See Details!"
+            to={`/details/${_id}`}
+            className="btn btn-primary"
+          >
             View Details
           </Link>
+          <Tooltip />
         </div>
       </div>
     </div>
