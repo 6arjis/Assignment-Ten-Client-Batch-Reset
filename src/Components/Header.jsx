@@ -3,8 +3,12 @@ import { NavLink } from "react-router-dom";
 import "./Header.css";
 import { AuthContext } from "../Provider/AuthProvider";
 import { toast } from "react-toastify";
+import { useTheme } from "../ThemeContext";
+
 const Header = () => {
   const { user, logOutUser } = useContext(AuthContext);
+  const { theme, toggleTheme } = useTheme();
+
   const handleLogOutBtn = () => {
     logOutUser()
       .then(() => {
@@ -82,7 +86,7 @@ const Header = () => {
           </li>
         </ul>
       </div>
-      <div className="navbar-end">
+      <div className="navbar-end flex  gap-2">
         {user ? (
           <div className="avatar flex gap-2">
             <div className="w-8 rounded-full">
@@ -102,6 +106,9 @@ const Header = () => {
             </NavLink>
           </div>
         )}
+        <button onClick={toggleTheme} className="btn btn-sm theme-toggle">
+          {theme === "dark" ? "Light" : "Dark"}
+        </button>
       </div>
     </div>
   );
