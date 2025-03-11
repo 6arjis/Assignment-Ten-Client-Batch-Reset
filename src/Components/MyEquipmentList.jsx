@@ -1,11 +1,22 @@
-import React from "react";
+import { useContext } from "react";
+import { useLoaderData } from "react-router-dom";
+import { AuthContext } from "../Provider/AuthProvider";
+import Product from "./Product";
 
 const MyEquipmentList = () => {
+  const { user } = useContext(AuthContext);
+  const userEmail = user.email;
+  const allEquipments = useLoaderData();
+  const usersEquipment = allEquipments.filter(
+    (equipment) => equipment.email == userEmail
+  );
+  console.log(allEquipments, userEmail);
   return (
-    <div>
-      <h1>This is my equipment list page </h1>
+    <div className="my-5 w-11/12 mx-auto grid grid-cols-3 gap-5">
+      {usersEquipment.map((equipment) => (
+        <Product data={equipment} key={equipment._id}></Product>
+      ))}
     </div>
   );
 };
-
 export default MyEquipmentList;

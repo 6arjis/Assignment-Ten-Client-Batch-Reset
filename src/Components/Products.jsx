@@ -4,6 +4,7 @@ import Product from "./Product";
 
 const Products = () => {
   const equipments = useLoaderData();
+  console.log(equipments);
   return (
     <div className="">
       <h1 className="text-3xl text-center mb-3">
