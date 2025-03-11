@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { useLoaderData } from "react-router-dom";
 import { AuthContext } from "../Provider/AuthProvider";
 import Product from "./Product";
+import MyEquipmentDetails from "./MyEquipmentDetails";
 
 const MyEquipmentList = () => {
   const { user } = useContext(AuthContext);
@@ -14,7 +15,10 @@ const MyEquipmentList = () => {
   return (
     <div className="my-5 w-11/12 mx-auto grid grid-cols-3 gap-5">
       {usersEquipment.map((equipment) => (
-        <Product data={equipment} key={equipment._id}></Product>
+        <MyEquipmentDetails
+          data={equipment}
+          key={equipment._id}
+        ></MyEquipmentDetails>
       ))}
     </div>
   );

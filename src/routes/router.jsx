@@ -9,6 +9,7 @@ import Home from "../Components/Home";
 import Details from "../Components/Details";
 import AuthLayout from "../Layouts/AuthLayout";
 import PrivateRoute from "./PrivateRoute";
+import Update from "../Components/Update";
 
 const router = createBrowserRouter([
   {
@@ -43,6 +44,17 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
+      {
+        path: "/update/:id",
+        element: (
+          <PrivateRoute>
+            <Update></Update>
+          </PrivateRoute>
+        ),
+        loader: ({ params }) =>
+          fetch(`http://localhost:3000/equipment/${params.id}`),
+      },
+
       {
         path: "/myEquipmentList",
         element: (
