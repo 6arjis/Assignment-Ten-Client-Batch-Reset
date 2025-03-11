@@ -1,9 +1,11 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../Provider/AuthProvider";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const AddEquipment = () => {
   const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
   const handleAddEquipment = (e) => {
     e.preventDefault();
     // const formElement = e.target();
@@ -46,6 +48,7 @@ const AddEquipment = () => {
         console.log(data);
         if (data.insertedId) {
           toast.success("Item has been added successfully");
+          navigate(`/myEquipmentList`);
         }
       });
   };

@@ -13,7 +13,7 @@ const MyEquipmentList = () => {
   );
   console.log(allEquipments, userEmail);
   return (
-    <div className="my-5 w-11/12 mx-auto grid grid-cols-3 gap-5">
+    <div className="my-5 w-11/12 mx-auto grid grid-cols-1 md:grid-cols-3 gap-5">
       {usersEquipment.map((equipment) => (
         <MyEquipmentDetails
           data={equipment}

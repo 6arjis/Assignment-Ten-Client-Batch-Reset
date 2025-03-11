@@ -1,7 +1,9 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const MyEquipmentDetails = ({ data }) => {
+  const navigate = useNavigate();
   const {
     _id,
     imageURL,
@@ -16,6 +18,35 @@ const MyEquipmentDetails = ({ data }) => {
     sellerName,
     email,
   } = data;
+  const handleDelete = (id) => {
+    console.log(id);
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(`http://localhost:3000/equipment/${_id}`, {
+          method: "DELETE",
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.deletedCount) {
+              Swal.fire({
+                title: "Deleted!",
+                text: "Your file has been deleted.",
+                icon: "success",
+              });
+              navigate(`/myEquipmentList`);
+            }
+          });
+      }
+    });
+  };
   return (
     <div className="card bg-base-100 w-full shadow-sm">
       <figure>
@@ -31,7 +62,7 @@ const MyEquipmentDetails = ({ data }) => {
           <Link to={`/update/${_id}`} className="btn btn-primary">
             Update
           </Link>
-          <Link to={`/details/${_id}`} className="btn btn-primary">
+          <Link onClick={() => handleDelete(_id)} className="btn btn-primary">
             Delete
           </Link>
         </div>
