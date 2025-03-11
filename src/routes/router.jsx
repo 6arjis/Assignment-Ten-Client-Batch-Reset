@@ -10,6 +10,7 @@ import Details from "../Components/Details";
 import AuthLayout from "../Layouts/AuthLayout";
 import PrivateRoute from "./PrivateRoute";
 import Update from "../Components/Update";
+import ErrorPage from "../Components/ErrorPage";
 
 const router = createBrowserRouter([
   {
@@ -82,7 +83,7 @@ const router = createBrowserRouter([
   },
   {
     path: "*",
-    element: <h1>Error</h1>,
+    element: <ErrorPage></ErrorPage>,
   },
 ]);
 export default router;
